@@ -20,11 +20,20 @@ def letter_count(book):
     return letter_dict
     
 def report(dict,count):
+    letter_list = []
+    for k, v in dict.items():
+        pair = {"letter":k,"count":v}
+        letter_list.append(pair)
+    letter_list.sort(reverse=True,key=sort_on)
     print("--- Begin report of books/frankenstein.txt ---")
     print(str(count) + " words found in the document\n")
-    for i in range(len(dict)):
-        print(dict)
-        
+    
+    for i in range(len(letter_list)):
+        if letter_list[i]["letter"].isalpha():
+            print("The '" + letter_list[i]["letter"] + "' character was found " + str(letter_list[i]["count"]) + " times")
     print("--- End report ---")
+
+def sort_on(dict):
+    return dict["count"]
 
 main()
