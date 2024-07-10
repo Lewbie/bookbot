@@ -1,38 +1,45 @@
 def main():
-    with open("books/frankenstein.txt") as f:
-        file_contents = f.read()
-        count = word_count(file_contents)
-        dict = letter_count(file_contents)
-        report(dict,count)
+    with open("books/frankenstein.txt") as book:
+        open_book = book.read()
+        word_total = word_count(open_book)
+        l_dict = letter_count(open_book)
+        report(l_dict, word_total)
 
+    #returns the total word count
 def word_count(book):
-    words = len(book.split())
-    return words
+    words_total = len(book.split())
+    return words_total
 
+    #returns the number of times each character appears
 def letter_count(book):
-    letter = book.lower()
-    letter_dict = {}
-    for i in range(len(letter)):
-        if letter[i] in letter_dict:
-            letter_dict[letter[i]] += 1
+    total = book.lower()
+    dict = {}
+    for i in range(len(total)):
+        if total[i] in dict:
+            dict[total[i]] += 1
         else:
-            letter_dict[letter[i]] = 1
-    return letter_dict
-    
+            dict[total[i]] = 1
+    return dict
+
 def report(dict,count):
+    #converting dictionary of letter:count pairs into a list of dictionaries
     letter_list = []
-    for k, v in dict.items():
-        pair = {"letter":k,"count":v}
+    for key, value in dict.items():
+        pair = {"letter":key,"count":value}
         letter_list.append(pair)
-    letter_list.sort(reverse=True,key=sort_on)
-    print("--- Begin report of books/frankenstein.txt ---")
-    print(str(count) + " words found in the document\n")
     
+    #sorting the order
+    letter_list.sort(reverse=True,key=sort_on)
+
+    #printing out the report
+    print("  --- Begin report of books/frankenstein.txt ---")
+    print(f"\t{count} words found in the document\n")
     for i in range(len(letter_list)):
         if letter_list[i]["letter"].isalpha():
-            print("The '" + letter_list[i]["letter"] + "' character was found " + str(letter_list[i]["count"]) + " times")
-    print("--- End report ---")
+            print(f"\tThe '{letter_list[i]['letter']}' character was found {letter_list[i]['count']} times")      
+    print("\t\t--- End report ---")
 
+    #function for sorting the order
 def sort_on(dict):
     return dict["count"]
 
